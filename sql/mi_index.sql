@@ -1,0 +1,1 @@
+CREATE INDEX idx_school_week_what ON weeks_and_dates (week_what);

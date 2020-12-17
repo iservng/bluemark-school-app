@@ -1,0 +1,128 @@
+<IfModule mod_rewrite.c>
+
+#Enable mod_rewrite
+RewriteEngine On
+
+
+#Specify the folder in whic the application recides
+#Use / if the application is in the root.
+RewriteBase /bluemark
+
+
+#Rewrite to correct domain to avoid cononization problems
+# RewriteCond %{HTTP_HOST} !^www\.example\.com
+# RewriteRule ^(.*)$ http://www.example.com/$1 [R=301,L]
+
+
+#Rewrite URLs sending in /index.php or /index.html to /
+RewriteCond %{THE_REQUEST} ^GET\ .*/index\.(php|html?)\ HTTP
+RewriteRule ^(.*)index\.(php|html?)$ $1 [R=301,L]
+
+
+
+
+
+#Rewite category pages
+RewriteRule ^.*-d([0-9]+)/.*-c([0-9]+)/page-([0-9]+)/?$ index.php?DepartmentId=$1&CategoryId=$2&Page=$3 [L]
+RewriteRule ^.*-d([0-9]+)/.*-c([0-9]+)/?$ index.php?DepartmentId=$1&CategoryId=$2 [L]
+
+
+#Rewrite department pages
+RewriteRule ^.*-d([0-9]+)/page-([0-9]+)/?$ index.php?DepartmentId=$1&Page=$2 [L]
+RewriteRule ^.*-d([0-9]+)/?$ index.php?DepartmentId=$1 [L]
+
+#Redirect search result
+RewriteRule ^search-results/find-(.*)/all-words-(on|off)/page-([0-9]+)/?$ index.php?SearchResults&SearchString=$1&AllWords=$2&Page=$3 [L]
+
+RewriteRule ^search-results/find-?(.*)/all-words-(on|off)/?$ index.php?SearchResults&SearchString=$1&AllWords=$2&Page=1 [L]
+
+
+#Rewrite subpages of the home page
+RewriteRule ^page-([0-9]+)/?$ index.php?Page=$1 [L]
+
+
+#Rewrite product details pages
+RewriteRule ^.*-p([0-9]+)/?$ index.php?ProductId=$1 [L]
+
+# Rewrite cart details pages
+  RewriteRule ^cart-details/?$ index.php?CartAction [L]
+
+  # Rewrite register customer pages
+RewriteRule ^register-customer/?$ index.php?RegisterCustomer [L]
+
+
+
+
+# Rewrite address details pages
+RewriteRule ^address-details/?$ index.php?AddressDetails [L]
+
+# Rewrite SELECT SECTION pages
+RewriteRule ^select-section/?$ index.php?SelectSection [L]
+
+
+# Rewrite credit card details pages
+RewriteRule ^credit-card-details/?$ index.php?CreditCardDetails [L]
+
+# Rewrite about us pages
+RewriteRule ^about-us/?$ index.php?AboutUs [L]
+
+
+# Rewrite account details pages
+RewriteRule ^account-details/?$ index.php?AccountDetails [L]
+
+# Rewrite my (student) profile pages
+RewriteRule ^my-profile/?$ index.php?MyProfile [L]
+
+# Rewrite my (student) profile Continenious assesment pages
+RewriteRule ^my-continuous-assesment/?$ index.php?MyProfile&CA [L]
+
+# Rewrite my (student) profile subjects lessons pages
+RewriteRule ^my-subjects-id([0-9]+)/?$ index.php?MyProfile&SubjectId=$1 [L]
+
+# Rewrite my (student) profile subjects topic pages
+RewriteRule ^my-topic-id([0-9]+)/?$ index.php?MyProfile&TopicId=$1 [L]
+
+# Rewrite primary application form pages
+RewriteRule ^primary-application-form/?$ index.php?PrimaryApplicationForm&SelectedSection=Primary [L]
+
+
+# Rewrite secondary application form pages
+RewriteRule ^secondary-application-form/?$ index.php?SecondaryApplicationForm&SelectedSection=Secondary [L]
+
+
+# Rewrite nursery application form pages
+RewriteRule ^nursery-application-form/?$ index.php?NurseryApplicationForm&SelectedSection=Nursery [L]
+
+
+# Rewrite  application done pages
+RewriteRule ^application-done/?$ index.php?ApplicationDone [L]
+
+
+
+
+# Rewrite student profile pages
+RewriteRule ^student-profile/?$ index.php?StudentProfile [L]
+
+
+# Rewrite Teacher profile pages
+RewriteRule ^teacher-profile/?$ index.php?TeacherProfile [L]
+
+
+
+# Rewrite checkout pages
+RewriteRule ^checkout/?$ index.php?Checkout [L]
+
+
+#Rewrite order done page
+RewriteRule ^order-done/?$ index.php?OrderDone [L]
+
+#Rewrite order error page
+RewriteRule ^order-error/?$ index.php?OrderError [L]
+
+</IfModule>
+
+#Set the default 500 page for Apache errors
+ErrorDocument 500 /bluemark/500.php
+
+#Set the default 404 page 
+ErrorDocument 404 /bluemark/404.php
